@@ -1,5 +1,3 @@
-#https://www.youtube.com/watch?v=ujOTNg17LjI
-
 import pygame
 
 pygame.init()
