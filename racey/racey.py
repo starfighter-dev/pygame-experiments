@@ -9,6 +9,8 @@ black = (0,0,0)
 white = (255,255,255)
 red = (255,0,0)
 
+car_width = 64
+
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('A bit Racey')
 clock = pygame.time.Clock()
@@ -16,7 +18,7 @@ clock = pygame.time.Clock()
 carImg = pygame.image.load('car.png')
 
 # my image is too big.. scale it
-carImg = pygame.transform.scale(carImg, (64, 84))
+carImg = pygame.transform.scale(carImg, (car_width, 90))
 
 def car(x,y):
    gameDisplay.blit(carImg,(x,y))
@@ -51,6 +53,9 @@ def game_loop():
 
       gameDisplay.fill(white)
       car(x,y)
+      if x > display_width - car_width or x < 0:
+         gameExit = True
+
       pygame.display.update()
       clock.tick(60)
 
