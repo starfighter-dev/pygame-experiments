@@ -1,0 +1,35 @@
+import pygame, time
+
+pygame.init()
+
+display_width = 800
+display_height = 600
+
+black = (0,0,0)
+white = (255,255,255)
+red = (255,0,0)
+
+gameDisplay = pygame.display.set_mode((display_width,display_height))
+pygame.display.set_caption('A bit Racey')
+clock = pygame.time.Clock()
+
+def intro:
+
+   gameExit = False
+
+   while not gameExit:
+      for event in pygame.event.get():
+         if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+
+         #debug
+         print(event)
+
+
+      pygame.display.update()
+      clock.tick(60)
+
+intro()
+pygame.quit()
+quit()
