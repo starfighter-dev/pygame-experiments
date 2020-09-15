@@ -1,4 +1,4 @@
-import pygame, time
+import pygame, time, random
 from spritesheet import SpriteSheet
 
 pygame.init()
@@ -71,6 +71,8 @@ def intro():
 
    drawn = 0;
 
+   is_shaking = 0
+
    while not gameExit:
       for event in pygame.event.get():
          if event.type == pygame.QUIT:
@@ -115,15 +117,24 @@ def intro():
       step = 5
 
       key_input = pygame.key.get_pressed()
-      if key_input[pygame.K_LEFT]:
-         skull_x -= step
-      if key_input[pygame.K_UP]:
-         skull_y -= step
-      if key_input[pygame.K_RIGHT]:
-         skull_x += step
-      if key_input[pygame.K_DOWN]:
-         skull_y += step
+      if not is_shaking:
+         if key_input[pygame.K_LEFT]:
+            skull_x -= step
+         if key_input[pygame.K_UP]:
+            skull_y -= step
+         if key_input[pygame.K_RIGHT]:
+            skull_x += step
+         if key_input[pygame.K_DOWN]:
+            skull_y += step
+         if key_input[pygame.K_SPACE]:
+            is_shaking = 1
 
+      if is_shaking:
+         is_shaking = is_shaking + 1
+         skull_x = skull_x + random.randint(-5,5)
+         skull_y = skull_y + random.randint(-5,5)
+         if is_shaking > 15:
+            is_shaking = 0
 
       gameDisplay.blit(skull,(skull_x,skull_y))
 
