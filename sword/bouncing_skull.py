@@ -110,20 +110,42 @@ def intro():
                loc_x = loc_x + scalesize
             loc_y = loc_y + scalesize
             loc_x = 0;
-      drawn = 0 #force redraw, or not
+      drawn = 0
 
-      step = 5
+      step = 10
+      if skull_direction == 'se':
+         skull_x = skull_x + step
+         skull_y = skull_y + step
+      if skull_direction == 'sw':
+         skull_x = skull_x - step
+         skull_y = skull_y + step
+      if skull_direction == 'ne':
+         skull_x = skull_x + step
+         skull_y = skull_y - step
+      if skull_direction == 'nw':
+         skull_x = skull_x - step
+         skull_y = skull_y - step
 
-      key_input = pygame.key.get_pressed()
-      if key_input[pygame.K_LEFT]:
-         skull_x -= step
-      if key_input[pygame.K_UP]:
-         skull_y -= step
-      if key_input[pygame.K_RIGHT]:
-         skull_x += step
-      if key_input[pygame.K_DOWN]:
-         skull_y += step
-
+      if skull_y > 600 - scalesize:
+         if skull_direction == 'se':
+            skull_direction = 'ne'
+         elif skull_direction == 'sw':
+            skull_direction = 'nw'
+      if skull_x > 800 - scalesize:
+         if skull_direction == 'se':
+            skull_direction = 'sw'
+         elif skull_direction == 'ne':
+            skull_direction = 'nw'
+      if skull_x < 0:
+         if skull_direction == 'sw':
+            skull_direction = 'se'
+         elif skull_direction == 'nw':
+            skull_direction = 'ne'
+      if skull_y < 0:
+         if skull_direction == 'ne':
+            skull_direction = 'se'
+         elif skull_direction == 'nw':
+            skull_direction = 'sw'
 
       gameDisplay.blit(skull,(skull_x,skull_y))
 
