@@ -27,25 +27,40 @@ def intro():
    path1   = spritesheet.image_at( (ts*5,0,ts,ts) )
    tree2   = spritesheet.image_at( (ts*2,ts,ts*2,ts*2),-1 )
 
-   map1 = (
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "F1", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-   )
-
+   # scale things..
    ground1 = pygame.transform.scale(ground1, (scalesize,scalesize))
    ground2 = pygame.transform.scale(ground2, (scalesize,scalesize))
    ground3 = pygame.transform.scale(ground3, (scalesize,scalesize))
    path1   = pygame.transform.scale(path1, (scalesize,scalesize))
    tree2   = pygame.transform.scale(tree2, (scalesize*2,scalesize*2))
    fence   = pygame.transform.scale(fence, (scalesize,scalesize))
+
+
+   background = (
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+   )
+
+   foreground = (
+      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "T2", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "T2", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "T2", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "T2", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "T2", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+   )
 
    while not gameExit:
       for event in pygame.event.get():
@@ -58,7 +73,7 @@ def intro():
 
       loc_x = 0;
       loc_y = 0;
-      for map_y in map1:
+      for map_y in background:
          for map_x in map_y:
             if map_x == 'G1':
                gameDisplay.blit(ground1,(loc_x,loc_y))
@@ -68,19 +83,21 @@ def intro():
                gameDisplay.blit(ground3,(loc_x,loc_y))
             if map_x == 'P1':
                gameDisplay.blit(path1,(loc_x,loc_y))
-            if map_x == 'T2':
-               gameDisplay.blit(tree2,(loc_x,loc_y))
-            if map_x == 'F1':
-               gameDisplay.blit(ground2,(loc_x,loc_y))
-               gameDisplay.blit(fence,(loc_x,loc_y))
             loc_x = loc_x + scalesize
          loc_y = loc_y + scalesize
          loc_x = 0;
 
-      gameDisplay.blit(tree2,(ts*3, ts*2))
-      gameDisplay.blit(tree2,(ts*2, ts*8))
-      gameDisplay.blit(tree2,(ts*20, ts*4))
-      gameDisplay.blit(tree2,(ts*18, ts*12))
+      loc_x = 0;
+      loc_y = 0;
+      for map_y in foreground:
+         for map_x in map_y:
+            if map_x == 'T2':
+               gameDisplay.blit(tree2,(loc_x,loc_y))
+            if map_x == 'F1':
+               gameDisplay.blit(fence,(loc_x,loc_y))
+            loc_x = loc_x + scalesize
+         loc_y = loc_y + scalesize
+         loc_x = 0;
 
       pygame.display.update()
       clock.tick(60)
