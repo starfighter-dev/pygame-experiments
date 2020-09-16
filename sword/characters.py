@@ -6,11 +6,15 @@ class Character:
     animation_position = 0
     animation_loop = 0
     direction = 'right'
+    x = 0
+    y = 0
+    step = 5
 
-    def __init__(self, name):
-      print(name)
+    def __init__(self, name, start_x, start_y):
+      self.x = start_x
+      self.y = start_y
       spritesheet = SpriteSheet('characters/'+name+'.png')
-      self.forward = [
+      self.down = [
          pygame.transform.scale(spritesheet.image_at( (0,0,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (32,0,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (64,0,32,32), -1 ), (64,64)),
@@ -25,14 +29,32 @@ class Character:
          pygame.transform.scale(spritesheet.image_at( (32,64,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (64,64,32,32), -1 ), (64,64)),
       ]
-      self.back = [
+      self.up = [
          pygame.transform.scale(spritesheet.image_at( (0,96,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (32,96,32,32), -1 ), (64,64)),
-         pygame.transform.scale(spritesheet.image_at( (64,86,32,32), -1 ), (64,64)),
+         pygame.transform.scale(spritesheet.image_at( (64,96,32,32), -1 ), (64,64)),
       ]
 
-    def get_image(self, direction):
-      self.direction = direction
+    def get_location(self):
+      return ( self.x, self.y )
+
+    def move_right(self):
+      self.x = self.x + self.step
+      self.direction = 'right'
+
+    def move_left(self):
+      self.x = self.x - self.step
+      self.direction = 'left'
+
+    def move_up(self):
+      self.y = self.y - self.step
+      self.direction = 'up'
+
+    def move_down(self):
+      self.y = self.y + self.step
+      self.direction = 'down'
+
+    def get_image(self):
 
       # This animation_loop thing is to slow down the changing animations...
       # we don't want to change it on every single frame.
@@ -43,10 +65,10 @@ class Character:
             self.animation_position = 0
       self.animation_loop = self.animation_loop + 1
 
-      if self.direction == 'forward':
-         return self.forward[self.animation_position]
-      if self.direction == 'back':
-         return self.back[self.animation_position]
+      if self.direction == 'down':
+         return self.down[self.animation_position]
+      if self.direction == 'up':
+         return self.up[self.animation_position]
       if self.direction == 'left':
          return self.left[self.animation_position]
       if self.direction == 'right':
