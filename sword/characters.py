@@ -9,6 +9,7 @@ class Character:
     x = 0
     y = 0
     step = 5
+    is_moving = False
 
     def __init__(self, name, start_x, start_y):
       self.x = start_x
@@ -38,21 +39,36 @@ class Character:
     def get_location(self):
       return ( self.x, self.y )
 
-    def move_right(self):
+    def move_right(self, limit):
       self.x = self.x + self.step
       self.direction = 'right'
+      if self.x >= limit:
+         return True
+      return False
 
-    def move_left(self):
+    def move_left(self, limit):
       self.x = self.x - self.step
       self.direction = 'left'
+      if self.x <= limit:
+         return True
+      return False
 
-    def move_up(self):
+    def move_up(self, limit):
       self.y = self.y - self.step
       self.direction = 'up'
+      if self.y <= limit:
+         return True
+      return False
 
-    def move_down(self):
+    def move_down(self, limit):
       self.y = self.y + self.step
       self.direction = 'down'
+      if self.y >= limit:
+         return True
+      return False
+
+    def get_speech_icon(self):
+      return self.down[0];
 
     def get_image(self):
 
