@@ -17,14 +17,15 @@ clock = pygame.time.Clock()
 
 def dialogue(char,text): 
     icon = char.get_speech_icon()
-    gameDisplay.blit(icon,(0,display_height-64)) #paste the 64x64 image onto the bottom left of the screen
+    icon = pygame.transform.scale(icon, (scalesize*2,scalesize*2))
+    gameDisplay.blit(icon,(0,display_height-128)) #paste the 64x64 image onto the bottom left of the screen
     font = 'freesansbold.ttf'
     font = pygame.font.Font(font,30)
-    blackBarRectPos = (64,display_height-64)  #position of the black bar at the bottom of the screen, to the right of the icon
-    blackBarRectSize = (display_width-64,64)  #size of the black bar
+    blackBarRectPos = (128,display_height-128)  #position of the black bar at the bottom of the screen, to the right of the icon
+    blackBarRectSize = (display_width-128,128)  #size of the black bar
     pygame.draw.rect(gameDisplay,(0,0,0),pygame.Rect(blackBarRectPos,blackBarRectSize)) #draw the black bar onto the screen
     textSurf = font.render(text,1,(255,255,255),(0,0,0))  #render the text (replace fontObject with whatever you called the font you're using for ingame text)
-    gameDisplay.blit(textSurf,(80,display_height-56))  #put it onto the screen
+    gameDisplay.blit(textSurf,(140,display_height-99))  #put it onto the screen
 
 
 def intro():
