@@ -23,21 +23,25 @@ class Character:
          pygame.transform.scale(spritesheet.image_at( (0,0,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (32,0,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (64,0,32,32), -1 ), (64,64)),
+         pygame.transform.scale(spritesheet.image_at( (32,0,32,32), -1 ), (64,64)),
       ]
       self.left = [
          pygame.transform.scale(spritesheet.image_at( (0,32,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (32,32,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (64,32,32,32), -1 ), (64,64)),
+         pygame.transform.scale(spritesheet.image_at( (32,32,32,32), -1 ), (64,64)),
       ]
       self.right = [
          pygame.transform.scale(spritesheet.image_at( (0,64,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (32,64,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (64,64,32,32), -1 ), (64,64)),
+         pygame.transform.scale(spritesheet.image_at( (32,64,32,32), -1 ), (64,64)),
       ]
       self.up = [
          pygame.transform.scale(spritesheet.image_at( (0,96,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (32,96,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (64,96,32,32), -1 ), (64,64)),
+         pygame.transform.scale(spritesheet.image_at( (32,96,32,32), -1 ), (64,64)),
       ]
 
     def get_name(self):
@@ -90,7 +94,7 @@ class Character:
       if self.animation_loop > 30:
          self.animation_loop = 0
          self.animation_position = self.animation_position + 1
-         if self.animation_position > 2:
+         if self.animation_position > 3:
             self.animation_position = 0
       self.animation_loop = self.animation_loop + 1
 
