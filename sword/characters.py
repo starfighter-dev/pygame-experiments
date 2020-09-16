@@ -14,6 +14,8 @@ class Character:
 
     def __init__(self, name, start_x, start_y):
       self.name = name
+      if self.name == 'zander':
+         self.step = 15
       self.x = start_x
       self.y = start_y
       spritesheet = SpriteSheet('characters/'+name+'.png')

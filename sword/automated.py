@@ -61,6 +61,7 @@ def intro():
    heart   = pygame.image.load('tiles/heart.png')
 
    morgan = Character('morgan', -20, 50)
+   zander = Character('zander', -64, 100)
    martin = Character('martin', 800+64+20, 50)
 
    # scale things..
@@ -144,6 +145,7 @@ def intro():
 
       gameDisplay.blit(morgan.get_image(), morgan.get_location())
       gameDisplay.blit(martin.get_image(), martin.get_location())
+      gameDisplay.blit(zander.get_image(), zander.get_location())
 
       # This is the non-interactive .. thing. Each phase is an 'act' of the animation.
       # I'm sure there are better ways of doing this.. this is what I came up with,
@@ -192,6 +194,21 @@ def intro():
          dialogue(morgan,'ZANDER!!!')
          phase = 9
 
+      if phase == 9:
+         if zander.move_right(900):
+            phase = 10
+
+      if phase == 10:
+         dialogue(martin,'ZANDER!!!!!!')
+         phase = 11 
+
+      if phase == 11:
+         if zander.move_left(400):
+            phase = 12
+
+      if phase == 12:
+         dialogue(zander,'i have hair')
+         phase = 13 
 
       pygame.display.update()
       clock.tick(60)
