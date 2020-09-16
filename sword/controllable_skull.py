@@ -1,6 +1,5 @@
 import pygame, time, random
 from spritesheet import SpriteSheet
-from characters import Character 
 
 pygame.init()
 
@@ -29,8 +28,6 @@ def intro():
    tree2   = spritesheet.image_at( (ts*2,ts,ts*2,ts*2),-1 )
    log     = spritesheet.image_at( (ts*6,ts*5,ts*2,ts),-1 )
    skull   = spritesheet.image_at( (ts*6,ts*131,ts,ts),-1 )
-
-   morgan = Character('morgan')
 
    # scale things..
    ground1 = pygame.transform.scale(ground1, (scalesize,scalesize))
@@ -120,20 +117,15 @@ def intro():
       step = 5
 
       key_input = pygame.key.get_pressed()
-      direction = 'forward'
       if not is_shaking:
          if key_input[pygame.K_LEFT]:
             skull_x -= step
-            direction = 'left'
          if key_input[pygame.K_UP]:
             skull_y -= step
-            direction = 'back'
          if key_input[pygame.K_RIGHT]:
             skull_x += step
-            direction = 'right'
          if key_input[pygame.K_DOWN]:
             skull_y += step
-            direction = 'forward'
          if key_input[pygame.K_SPACE]:
             is_shaking = 1
 
@@ -144,7 +136,7 @@ def intro():
          if is_shaking > 15:
             is_shaking = 0
 
-      gameDisplay.blit(morgan.get_image(direction), (skull_x,skull_y))
+      gameDisplay.blit(skull,(skull_x,skull_y))
 
       pygame.display.update()
       clock.tick(60)
