@@ -56,32 +56,36 @@ class Character:
     def get_location(self):
       return ( self.x, self.y )
 
-    def move_right(self, limit):
+    def move_right(self, limit=False):
       self.x = self.x + self.step
       self.direction = 'right'
-      if self.x >= limit:
-         return True
+      if limit:
+         if self.x >= limit:
+            return True
       return False
 
-    def move_left(self, limit):
+    def move_left(self, limit=False):
       self.x = self.x - self.step
       self.direction = 'left'
-      if self.x <= limit:
-         return True
+      if limit:
+         if self.x <= limit:
+            return True
       return False
 
-    def move_up(self, limit):
+    def move_up(self, limit=False):
       self.y = self.y - self.step
       self.direction = 'up'
-      if self.y <= limit:
-         return True
+      if limit:
+         if self.y <= limit:
+            return True
       return False
 
-    def move_down(self, limit):
+    def move_down(self, limit=False):
       self.y = self.y + self.step
       self.direction = 'down'
-      if self.y >= limit:
-         return True
+      if limit:
+         if self.y >= limit:
+            return True
       return False
 
     def get_speech_icon(self):
