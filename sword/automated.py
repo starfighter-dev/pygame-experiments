@@ -15,17 +15,31 @@ gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Sword')
 clock = pygame.time.Clock()
 
-def dialogue(char,text): 
+# I butchered this for dialog: https://www.reddit.com/r/pygame/comments/9w3ymp/how_to_add_dialogue_to_npcs/
+def dialogue(char,text):
+    charpos = 0
     icon = char.get_speech_icon()
     icon = pygame.transform.scale(icon, (scalesize*2,scalesize*2))
-    gameDisplay.blit(icon,(0,display_height-128)) #paste the 64x64 image onto the bottom left of the screen
-    font = 'freesansbold.ttf'
-    font = pygame.font.Font(font,30)
-    blackBarRectPos = (128,display_height-128)  #position of the black bar at the bottom of the screen, to the right of the icon
-    blackBarRectSize = (display_width-128,128)  #size of the black bar
-    pygame.draw.rect(gameDisplay,(0,0,0),pygame.Rect(blackBarRectPos,blackBarRectSize)) #draw the black bar onto the screen
-    textSurf = font.render(text,1,(255,255,255),(0,0,0))  #render the text (replace fontObject with whatever you called the font you're using for ingame text)
-    gameDisplay.blit(textSurf,(140,display_height-99))  #put it onto the screen
+    #font = 'freesansbold.ttf'
+    font = 'EightBitDragon-anqx.ttf'
+    font = pygame.font.Font(font,20)
+    blackBarRectPos = (128,display_height-128)
+    blackBarRectSize = (display_width-128,128)
+    pygame.draw.rect(gameDisplay,(0,0,0),pygame.Rect(blackBarRectPos,blackBarRectSize))
+    pygame.draw.rect(gameDisplay,char.get_colour(),pygame.Rect((0,display_height-128),(128,128)))
+    gameDisplay.blit(icon,(0,display_height-128))
+    char_pos = 0
+    text2 = text[0:char_pos]
+    textSurf = font.render(char.get_name(),1,(44,191,245),(0,0,0))
+    gameDisplay.blit(textSurf,(150,display_height-115))
+    while char_pos <= len(text):
+         text2 = text[0:char_pos]
+         textSurf = font.render(text2,1,(255,255,255),(0,0,0))
+         gameDisplay.blit(textSurf,(170,display_height-80))
+         pygame.display.update()
+         char_pos = char_pos + 1
+         pygame.time.wait(50)
+    pygame.time.wait(1000)
 
 
 def intro():
@@ -128,6 +142,9 @@ def intro():
          loc_y = loc_y + scalesize
          loc_x = 0;
 
+      gameDisplay.blit(morgan.get_image(), morgan.get_location())
+      gameDisplay.blit(martin.get_image(), martin.get_location())
+
       # This is the non-interactive .. thing. Each phase is an 'act' of the animation.
       # I'm sure there are better ways of doing this.. this is what I came up with,
       # while drinking a cup of tea.
@@ -160,15 +177,21 @@ def intro():
 
       # A speech bubble of some sort
       if phase == 5:
-         frame_counter = frame_counter + 1
-         if frame_counter < 260:
-            dialogue(morgan,'Hello everybody!')
-         else:
-            frame_counter = 0
-            phase = 6
+         dialogue(morgan,'Hello everybody!')
+         phase = 6
 
-      gameDisplay.blit(morgan.get_image(), morgan.get_location())
-      gameDisplay.blit(martin.get_image(), martin.get_location())
+      if phase == 6:
+         dialogue(martin,'We have brought you here today for some news...')
+         phase = 7
+
+      if phase == 7:
+         dialogue(martin,'BUT FIRST!')
+         phase = 8
+
+      if phase == 8:
+         dialogue(morgan,'ZANDER!!!')
+         phase = 9
+
 
       pygame.display.update()
       clock.tick(60)

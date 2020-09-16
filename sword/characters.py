@@ -10,8 +10,10 @@ class Character:
     y = 0
     step = 5
     is_moving = False
+    name = ''
 
     def __init__(self, name, start_x, start_y):
+      self.name = name
       self.x = start_x
       self.y = start_y
       spritesheet = SpriteSheet('characters/'+name+'.png')
@@ -35,6 +37,15 @@ class Character:
          pygame.transform.scale(spritesheet.image_at( (32,96,32,32), -1 ), (64,64)),
          pygame.transform.scale(spritesheet.image_at( (64,96,32,32), -1 ), (64,64)),
       ]
+
+    def get_name(self):
+      return self.name
+
+    def get_colour(self):
+      val = ( 98, 67, 110 )
+      if self.name == 'martin':
+         val = ( 2, 99, 168 )
+      return val
 
     def get_location(self):
       return ( self.x, self.y )
