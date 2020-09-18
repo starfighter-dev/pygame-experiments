@@ -5,7 +5,7 @@ class Character:
 
     animation_position = 0
     animation_loop = 0
-    direction = 'right'
+    direction = 'down'
     x = 0
     y = 0
     step = 5
@@ -16,6 +16,13 @@ class Character:
       self.name = name
       if self.name == 'zander':
          self.step = 15
+      if self.name == 'geoff':
+         self.step = 15
+      if self.name == 'cat1':
+         self.step = 10
+      if self.name == 'cat2':
+         self.step = 7 
+      # ^ these should be passed in to the constuctor
       self.x = start_x
       self.y = start_y
       spritesheet = SpriteSheet('characters/'+name+'.png')

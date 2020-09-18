@@ -47,7 +47,9 @@ def intro():
    gameExit = False
    frame_counter = 0
 
-   phase = 1
+   phase = 0
+   summoning = 0
+   summoned  = False
 
    spritesheet = SpriteSheet('tiles/sheet.png')
    ground1 = spritesheet.image_at( (0,0,ts,ts) )
@@ -58,10 +60,16 @@ def intro():
    tree2   = spritesheet.image_at( (ts*2,ts,ts*2,ts*2),-1 )
    log     = spritesheet.image_at( (ts*6,ts*5,ts*2,ts),-1 )
    skull   = spritesheet.image_at( (ts*6,ts*131,ts,ts),-1 )
+   statue  = spritesheet.image_at( (ts*4,ts*113,ts,ts*2),-1 )
    heart   = pygame.image.load('tiles/heart.png')
 
-   morgan = Character('morgan', -20, 50)
+   cat1 = Character('cat2', -100, 20)
+   cat2 = Character('cat2', 900, 40)
+   cat3 = Character('cat3', -100, 60)
+   morgan = Character('morgan', -64, 50)
    zander = Character('zander', -64, 100)
+   alex   = Character('alex', 575, 250)
+   geoff = Character('geoff', 450, -80)
    martin = Character('martin', 800+64+20, 50)
 
    # scale things..
@@ -73,6 +81,7 @@ def intro():
    fence   = pygame.transform.scale(fence, (scalesize,scalesize))
    log     = pygame.transform.scale(log, (scalesize*2,scalesize))
    skull   = pygame.transform.scale(skull, (scalesize,scalesize))
+   statue  = pygame.transform.scale(statue, (scalesize,scalesize*2))
 
    background = (
       ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
@@ -91,7 +100,7 @@ def intro():
       ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
       ( "  ", "T2", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
       ( "  ", "  ", "T2", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
-      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "S1", "  ", "  ", "  " ),
       ( "  ", "  ", "T2", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
       ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
       ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "L1", "  ", "  ", "  " ),
@@ -139,19 +148,55 @@ def intro():
                gameDisplay.blit(fence,(loc_x,loc_y))
             if map_x == 'L1':
                gameDisplay.blit(log,(loc_x,loc_y))
+            if map_x == 'S1':
+               if not summoned:
+                  statue_x = loc_x
+                  statue_y = loc_y
+                  if summoning > 0:
+                     summoning = summoning + 1
+                     statue_x = statue_x + random.randint(-5,5)
+                     statue_y = statue_y + random.randint(-5,5)
+                     if summoning > 80:
+                        # ugh python - ??
+                        dim = statue.get_size()
+                        lst = list(dim)
+                        lst[0] = lst[0] + 100;
+                        lst[1] = lst[1] + 100;
+                        dim = tuple(lst)
+                        statue_x = statue_x - 50 * (summoning-80)
+                        statue_y = statue_y - 50 * (summoning-80)
+                        statue  = pygame.transform.scale(statue, dim)
+                     if summoning > 100:
+                        summoned = True
+                  gameDisplay.blit(statue,(statue_x,statue_y))
             loc_x = loc_x + scalesize
          loc_y = loc_y + scalesize
          loc_x = 0;
 
+
       gameDisplay.blit(morgan.get_image(), morgan.get_location())
       gameDisplay.blit(martin.get_image(), martin.get_location())
       gameDisplay.blit(zander.get_image(), zander.get_location())
+      gameDisplay.blit(geoff.get_image(), geoff.get_location())
+      if summoned:
+         gameDisplay.blit(alex.get_image(), alex.get_location())
+      gameDisplay.blit(cat1.get_image(), cat1.get_location())
+      gameDisplay.blit(cat2.get_image(), cat2.get_location())
+      gameDisplay.blit(cat3.get_image(), cat3.get_location())
 
       # This is the non-interactive .. thing. Each phase is an 'act' of the animation.
       # I'm sure there are better ways of doing this.. this is what I came up with,
       # while drinking a cup of tea.
 
       # Morgan walks in to the right
+      if phase == 0:
+         t1 = cat1.move_right(900)
+         t2 = cat2.move_left(-100)
+         t3 = cat3.move_right(900)
+         if t1 and t2 and t3:
+            print('done cats')
+            phase = 1 
+
       if phase == 1:
          if morgan.move_right(360):
             phase = 2
@@ -203,12 +248,69 @@ def intro():
          phase = 11 
 
       if phase == 11:
-         if zander.move_left(400):
+         if zander.move_left(340):
             phase = 12
 
       if phase == 12:
-         dialogue(zander,'i have hair')
-         phase = 13 
+         if zander.move_down(270):
+            phase = 13
+
+      # Add some frames between z arriving and speaking.
+      if phase == 13:
+         frame_counter = frame_counter + 1
+         if frame_counter > 10:
+            frame_counter = 0
+            phase = 14
+
+      if phase == 14:
+         dialogue(zander,'???')
+         phase = 15
+
+      if phase == 15:
+         dialogue(martin,'GEOFFFFFF!!!!!!')
+         phase = 16 
+
+      if phase == 16:
+         if geoff.move_down(270):
+            phase = 17
+
+      if phase == 17:
+         frame_counter = frame_counter + 1
+         if frame_counter > 10:
+            frame_counter = 0
+            phase = 18
+
+      if phase == 18:
+         dialogue(geoff,'** Minecraft ** Mario ** Beano **')
+         phase = 19
+
+      if phase == 19:
+         dialogue(martin,'We\'re missing one...')
+         phase = 20
+
+      if phase == 20:
+         dialogue(morgan,'>> SUMMON ALEX <<')
+         phase = 21 
+
+      if phase == 21:
+         if summoning == 0:
+            summoning = 1
+         if summoned:
+            phase = 22
+
+      if phase == 22:
+         frame_counter = frame_counter + 1
+         if frame_counter > 10:
+            frame_counter = 0
+            phase = 23
+
+      if phase == 23:
+         dialogue(alex,'HAIL ALEX!')
+         phase = 24 
+
+      #cat1 = Character('cat1', -100, 20)
+      #cat2 = Character('cat2', 900, 40)
+      #cat3 = Character('cat3', -100, 60)
 
       pygame.display.update()
       clock.tick(60)
