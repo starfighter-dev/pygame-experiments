@@ -51,7 +51,14 @@ def intro():
    summoning = 0
    summoned  = False
 
+   chest = 'closed'
+
    spritesheet = SpriteSheet('tiles/sheet.png')
+   pumpkin = spritesheet.image_at( (ts*6,ts*20,ts,ts), -1 )
+   seedling = spritesheet.image_at( (ts*7,ts*19,ts,ts), -1 )
+   stone1 = spritesheet.image_at( (ts*1,ts*57,ts,ts) )
+   stone2 = spritesheet.image_at( (ts*2,ts*57,ts,ts) )
+   stone3 = spritesheet.image_at( (0,ts*57,ts,ts) )
    ground1 = spritesheet.image_at( (0,0,ts,ts) )
    ground2 = spritesheet.image_at( (ts,0,ts,ts) )
    ground3 = spritesheet.image_at( (ts*2,0,ts,ts) )
@@ -60,54 +67,72 @@ def intro():
    tree2   = spritesheet.image_at( (ts*2,ts,ts*2,ts*2),-1 )
    log     = spritesheet.image_at( (ts*6,ts*5,ts*2,ts),-1 )
    skull   = spritesheet.image_at( (ts*6,ts*131,ts,ts),-1 )
+   fountain = spritesheet.image_at( (0,ts*116,ts*3,ts*3),-1 )
    statue  = spritesheet.image_at( (ts*4,ts*113,ts,ts*2),-1 )
+   statue2 = spritesheet.image_at( (ts*3,ts*115,ts,ts*2),-1 )
+   statue3 = spritesheet.image_at( (ts*4,ts*115,ts,ts*2),-1 )
+   grave   = spritesheet.image_at( (ts*3,ts*8,ts,ts),-1 )
    heart   = pygame.image.load('tiles/heart.png')
 
    cat1 = Character('cat2', -100, 20)
    cat2 = Character('cat2', 900, 40)
    cat3 = Character('cat3', -100, 60)
    morgan = Character('morgan', -64, 50)
-   zander = Character('zander', -64, 100)
-   ghost  = Character('ghost', -120, 100)
-   alex   = Character('alex', 575, 250)
+   zander = Character('zander', -64, 70)
+   ghost  = Character('ghost', -120, 70)
+   ace   = Character('ace', 575, 188)
    geoff = Character('geoff', 450, -80)
    martin = Character('martin', 800+64+20, 50)
 
+   chest_closed = spritesheet.image_at( (ts*6,ts*107,ts,ts),-1 )
+   chest_open   = spritesheet.image_at( (ts*6,ts*108,ts,ts),-1 )
+
    # scale things..
+   chest_closed = pygame.transform.scale(chest_closed, (scalesize,scalesize))
+   chest_open   = pygame.transform.scale(chest_open, (scalesize,scalesize))
+   pumpkin = pygame.transform.scale(pumpkin, (scalesize,scalesize))
+   seedling = pygame.transform.scale(seedling, (scalesize,scalesize))
    ground1 = pygame.transform.scale(ground1, (scalesize,scalesize))
    ground2 = pygame.transform.scale(ground2, (scalesize,scalesize))
    ground3 = pygame.transform.scale(ground3, (scalesize,scalesize))
+   grave = pygame.transform.scale(grave, (scalesize,scalesize))
+   stone1  = pygame.transform.scale(stone1, (scalesize,scalesize))
+   stone2  = pygame.transform.scale(stone2, (scalesize,scalesize))
+   stone3  = pygame.transform.scale(stone3, (scalesize,scalesize))
    path1   = pygame.transform.scale(path1, (scalesize,scalesize))
    tree2   = pygame.transform.scale(tree2, (scalesize*2,scalesize*2))
    fence   = pygame.transform.scale(fence, (scalesize,scalesize))
    log     = pygame.transform.scale(log, (scalesize*2,scalesize))
    skull   = pygame.transform.scale(skull, (scalesize,scalesize))
    statue  = pygame.transform.scale(statue, (scalesize,scalesize*2))
+   fountain = pygame.transform.scale(fountain, (scalesize*3,scalesize*3))
+   statue2 = pygame.transform.scale(statue2, (scalesize,scalesize*2))
+   statue3 = pygame.transform.scale(statue3, (scalesize,scalesize*2))
 
    background = (
+      ( "S1", "S1", "S1", "S1", "S2", "P1", "P1", "P1", "S3", "S1", "S1", "S1", "S1" ),
       ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
       ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
       ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
       ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
-      ( "G2", "G2", "G2", "G2", "G2", "P1", "P1", "P1", "G2", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "P1", "P1", "P1", "P1", "P1", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "P1", "P1", "P1", "P1", "P1", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "G2", "P1", "P1", "P1", "P1", "P1", "G2", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "P1", "P1", "P1", "P1", "P1", "P1", "P1", "G2", "G2", "G2" ),
+      ( "G2", "G2", "G2", "P1", "P1", "P1", "P1", "P1", "P1", "P1", "G2", "G2", "G2" ),
    )
 
    foreground = (
-      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
-      ( "  ", "T2", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
-      ( "  ", "  ", "T2", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
-      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "S1", "  ", "  ", "  " ),
-      ( "  ", "  ", "T2", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
-      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
-      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "L1", "  ", "  ", "  " ),
-      ( "  ", "  ", "T2", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
-      ( "T2", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
-      ( "  ", "  ", "  ", "  ", "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "PD", "PD", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "PD", "  ", "  " ),
+      ( "F1", "  ", "T2", "  ", "  ", "  ", "  ", "  ", "  ", "A1", "  ", "A2", "  " ),
+      ( "F1", "GR", "  ", "T2", "  ", "  ", "  ", "  ", "  ", "  ", "PD", "T2", "  " ),
+      ( "F1", "SK", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "PU", "  ", "  " ),
+      ( "F1", "T2", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "F1", "  ", "A3", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "L1", "  ", "  " ),
+      ( "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "T2", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
    )
 
    drawn = 0;
@@ -127,6 +152,12 @@ def intro():
       loc_y = 0;
       for map_y in background:
          for map_x in map_y:
+            if map_x == 'S1':
+               gameDisplay.blit(stone1,(loc_x,loc_y))
+            if map_x == 'S2':
+               gameDisplay.blit(stone2,(loc_x,loc_y))
+            if map_x == 'S3':
+               gameDisplay.blit(stone3,(loc_x,loc_y))
             if map_x == 'G1':
                gameDisplay.blit(ground1,(loc_x,loc_y))
             if map_x == 'G2':
@@ -143,13 +174,25 @@ def intro():
       loc_y = 0;
       for map_y in foreground:
          for map_x in map_y:
+            if map_x == 'GR':
+               gameDisplay.blit(grave,(loc_x,loc_y))
+            if map_x == 'SK':
+               gameDisplay.blit(skull,(loc_x,loc_y))
+            if map_x == 'PD':
+               gameDisplay.blit(seedling,(loc_x,loc_y))
+            if map_x == 'PU':
+               gameDisplay.blit(pumpkin,(loc_x,loc_y))
             if map_x == 'T2':
                gameDisplay.blit(tree2,(loc_x,loc_y))
             if map_x == 'F1':
                gameDisplay.blit(fence,(loc_x,loc_y))
             if map_x == 'L1':
                gameDisplay.blit(log,(loc_x,loc_y))
-            if map_x == 'S1':
+            if map_x == 'A2':
+               gameDisplay.blit(statue2,(loc_x,loc_y))
+            if map_x == 'A3':
+               gameDisplay.blit(statue3,(loc_x,loc_y))
+            if map_x == 'A1':
                if not summoned:
                   statue_x = loc_x
                   statue_y = loc_y
@@ -174,6 +217,12 @@ def intro():
          loc_y = loc_y + scalesize
          loc_x = 0;
 
+      # Foreground tiles that don't fit into my tile engine
+      if chest == 'open':
+         gameDisplay.blit(chest_open, (390,380))
+      else:
+         gameDisplay.blit(chest_closed, (390,380))
+      gameDisplay.blit(fountain,(327,490))
 
       gameDisplay.blit(morgan.get_image(), morgan.get_location())
       gameDisplay.blit(martin.get_image(), martin.get_location())
@@ -181,7 +230,7 @@ def intro():
       gameDisplay.blit(ghost.get_image(), ghost.get_location())
       gameDisplay.blit(geoff.get_image(), geoff.get_location())
       if summoned:
-         gameDisplay.blit(alex.get_image(), alex.get_location())
+         gameDisplay.blit(ace.get_image(), ace.get_location())
       gameDisplay.blit(cat1.get_image(), cat1.get_location())
       gameDisplay.blit(cat2.get_image(), cat2.get_location())
       gameDisplay.blit(cat3.get_image(), cat3.get_location())
@@ -219,8 +268,8 @@ def intro():
 
       # We walk down together
       if phase == 4:
-         t1 = morgan.move_down(350)
-         t2 = martin.move_down(350)
+         t1 = morgan.move_down(300)
+         t2 = martin.move_down(300)
          if t1 and t2:
             phase = 5
 
@@ -256,7 +305,7 @@ def intro():
             phase = 12
 
       if phase == 12:
-         if zander.move_down(270):
+         if zander.move_down(220):
             phase = 13
 
       # Add some frames between z arriving and speaking.
@@ -275,7 +324,7 @@ def intro():
          phase = 16 
 
       if phase == 16:
-         if geoff.move_down(270):
+         if geoff.move_down(220):
             phase = 17
 
       if phase == 17:
@@ -309,8 +358,19 @@ def intro():
             phase = 23
 
       if phase == 23:
-         dialogue(alex,'HAIL ALEX!')
-         phase = 24 
+         dialogue(ace,'I HAVE ARRIVED!')
+         phase = 24
+
+      if phase == 24:
+         t1 = ace.move_up(120)
+         t2 = ace.move_left(390)
+         if t1 and t2:
+            phase = 25
+
+      if phase == 25:
+         if ace.move_down(215):
+            phase = 26
+
 
       #cat1 = Character('cat1', -100, 20)
       #cat2 = Character('cat2', 900, 40)

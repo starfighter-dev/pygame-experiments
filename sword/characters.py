@@ -1,4 +1,4 @@
-import pygame
+import pygame, random
 from spritesheet import SpriteSheet
 
 class Character:
@@ -17,7 +17,7 @@ class Character:
       if self.name == 'zander':
          self.step = 15
       if self.name == 'ghost':
-         self.step = 14
+         self.step = 6
       if self.name == 'geoff':
          self.step = 15
       if self.name == 'cat1':
@@ -63,38 +63,40 @@ class Character:
       return val
 
     def get_location(self):
+      if self.name == 'ghost':
+         return ( self.x, self.y + random.randint(-3,3) )
       return ( self.x, self.y )
 
     def move_right(self, limit=False):
-      self.x = self.x + self.step
       self.direction = 'right'
       if limit:
          if self.x >= limit:
             return True
+      self.x = self.x + self.step
       return False
 
     def move_left(self, limit=False):
-      self.x = self.x - self.step
       self.direction = 'left'
       if limit:
          if self.x <= limit:
             return True
+      self.x = self.x - self.step
       return False
 
     def move_up(self, limit=False):
-      self.y = self.y - self.step
       self.direction = 'up'
       if limit:
          if self.y <= limit:
             return True
+      self.y = self.y - self.step
       return False
 
     def move_down(self, limit=False):
-      self.y = self.y + self.step
       self.direction = 'down'
       if limit:
          if self.y >= limit:
             return True
+      self.y = self.y + self.step
       return False
 
     def get_speech_icon(self):
