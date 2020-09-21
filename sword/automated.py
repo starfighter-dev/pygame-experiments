@@ -68,6 +68,7 @@ def intro():
    cat3 = Character('cat3', -100, 60)
    morgan = Character('morgan', -64, 50)
    zander = Character('zander', -64, 100)
+   ghost  = Character('ghost', -120, 100)
    alex   = Character('alex', 575, 250)
    geoff = Character('geoff', 450, -80)
    martin = Character('martin', 800+64+20, 50)
@@ -177,6 +178,7 @@ def intro():
       gameDisplay.blit(morgan.get_image(), morgan.get_location())
       gameDisplay.blit(martin.get_image(), martin.get_location())
       gameDisplay.blit(zander.get_image(), zander.get_location())
+      gameDisplay.blit(ghost.get_image(), ghost.get_location())
       gameDisplay.blit(geoff.get_image(), geoff.get_location())
       if summoned:
          gameDisplay.blit(alex.get_image(), alex.get_location())
@@ -240,7 +242,9 @@ def intro():
          phase = 9
 
       if phase == 9:
-         if zander.move_right(900):
+         t1 = zander.move_right(900)
+         t2 = ghost.move_right(890)
+         if t1 and t2:
             phase = 10
 
       if phase == 10:

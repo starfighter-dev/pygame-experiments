@@ -16,6 +16,8 @@ class Character:
       self.name = name
       if self.name == 'zander':
          self.step = 15
+      if self.name == 'ghost':
+         self.step = 14
       if self.name == 'geoff':
          self.step = 15
       if self.name == 'cat1':
