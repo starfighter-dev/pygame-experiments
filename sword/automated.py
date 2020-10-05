@@ -41,6 +41,15 @@ def dialogue(char,text):
          pygame.time.wait(50)
     pygame.time.wait(1000)
 
+def fadeout():
+    fadeout = pygame.Surface((display_width, display_height))
+    fadeout = fadeout.convert()
+    fadeout.fill((0,0,0))
+    for i in range(255):
+        fadeout.set_alpha(i)
+        gameDisplay.blit(fadeout, (0, 0))
+        pygame.display.update()
+
 def dialogue_all(name,image,text):
     charpos = 0
     icon = pygame.transform.scale(image, (scalesize*2,scalesize*2))
@@ -78,6 +87,10 @@ def intro():
    chest = 'closed'
    show_key = False
    show_bear = False
+
+   pop_sound = pygame.mixer.Sound("sound/pop.wav")
+   pygame.mixer.init()
+   pygame.mixer.music.load('sound/lullaby.wav')
 
    spritesheet = SpriteSheet('tiles/sheet.png')
    pumpkin = spritesheet.image_at( (ts*6,ts*20,ts,ts), -1 )
@@ -240,6 +253,8 @@ def intro():
                         statue_x = statue_x - 50 * (summoning-80)
                         statue_y = statue_y - 50 * (summoning-80)
                         statue  = pygame.transform.scale(statue, dim)
+                        if summoning == 97:
+                           pygame.mixer.Sound.play(pop_sound)
                      if summoning > 100:
                         summoned = True
                   gameDisplay.blit(statue,(statue_x,statue_y))
@@ -460,6 +475,8 @@ def intro():
          chest = 'hidden'
          show_bear = True
          frame_counter = frame_counter + 1
+         if frame_counter == 1:
+            pygame.mixer.music.play(1)
          if frame_counter > 100:
             frame_counter = 0
             phase = 36
@@ -507,6 +524,10 @@ def intro():
       if phase == 46:
          dialogue(martin,'I hope you are excited as we are!')
          phase = 47
+
+      if phase == 47:
+         fadeout()
+         phase = 48
 
       #cat1 = Character('cat1', -100, 20)
       #cat2 = Character('cat2', 900, 40)
