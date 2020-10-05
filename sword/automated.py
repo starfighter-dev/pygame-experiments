@@ -41,6 +41,30 @@ def dialogue(char,text):
          pygame.time.wait(50)
     pygame.time.wait(1000)
 
+def dialogue_all(name,image,text):
+    charpos = 0
+    icon = pygame.transform.scale(image, (scalesize*2,scalesize*2))
+    #font = 'freesansbold.ttf'
+    font = 'EightBitDragon-anqx.ttf'
+    font = pygame.font.Font(font,20)
+    blackBarRectPos = (128,display_height-128)
+    blackBarRectSize = (display_width-128,128)
+    pygame.draw.rect(gameDisplay,(0,0,0),pygame.Rect(blackBarRectPos,blackBarRectSize))
+    pygame.draw.rect(gameDisplay,(0,0,0),pygame.Rect((0,display_height-128),(128,128)))
+    gameDisplay.blit(icon,(0,display_height-128))
+    char_pos = 0
+    text2 = text[0:char_pos]
+    textSurf = font.render(name,1,(44,191,245),(0,0,0))
+    gameDisplay.blit(textSurf,(150,display_height-115))
+    while char_pos <= len(text):
+         text2 = text[0:char_pos]
+         textSurf = font.render(text2,1,(255,255,255),(0,0,0))
+         gameDisplay.blit(textSurf,(170,display_height-80))
+         pygame.display.update()
+         char_pos = char_pos + 1
+         pygame.time.wait(50)
+    pygame.time.wait(1000)
+
 
 def intro():
 
@@ -52,6 +76,8 @@ def intro():
    summoned  = False
 
    chest = 'closed'
+   show_key = False
+   show_bear = False
 
    spritesheet = SpriteSheet('tiles/sheet.png')
    pumpkin = spritesheet.image_at( (ts*6,ts*20,ts,ts), -1 )
@@ -72,6 +98,8 @@ def intro():
    statue2 = spritesheet.image_at( (ts*3,ts*115,ts,ts*2),-1 )
    statue3 = spritesheet.image_at( (ts*4,ts*115,ts,ts*2),-1 )
    grave   = spritesheet.image_at( (ts*3,ts*8,ts,ts),-1 )
+   key     = spritesheet.image_at( (ts*7,ts*131,ts,ts),-1 )
+   bear    = spritesheet.image_at( (ts*3,ts*128,ts,ts),-1 )
    heart   = pygame.image.load('tiles/heart.png')
 
    cat1 = Character('cat2', -100, 20)
@@ -96,6 +124,8 @@ def intro():
    ground2 = pygame.transform.scale(ground2, (scalesize,scalesize))
    ground3 = pygame.transform.scale(ground3, (scalesize,scalesize))
    grave = pygame.transform.scale(grave, (scalesize,scalesize))
+   key = pygame.transform.scale(key, (scalesize,scalesize))
+   bear = pygame.transform.scale(bear, (scalesize*2,scalesize*2))
    stone1  = pygame.transform.scale(stone1, (scalesize,scalesize))
    stone2  = pygame.transform.scale(stone2, (scalesize,scalesize))
    stone3  = pygame.transform.scale(stone3, (scalesize,scalesize))
@@ -130,7 +160,7 @@ def intro():
       ( "F1", "SK", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "PU", "  ", "  " ),
       ( "F1", "T2", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
       ( "F1", "  ", "A3", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "L1", "  ", "  " ),
-      ( "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
+      ( "F1", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "T2", "  " ),
       ( "T2", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
       ( "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " ),
    )
@@ -218,10 +248,18 @@ def intro():
          loc_x = 0;
 
       # Foreground tiles that don't fit into my tile engine
-      if chest == 'open':
-         gameDisplay.blit(chest_open, (390,380))
-      else:
-         gameDisplay.blit(chest_closed, (390,380))
+      if chest != 'hidden':
+         if chest == 'open':
+            gameDisplay.blit(chest_open, (390,380))
+         else:
+            gameDisplay.blit(chest_closed, (390,380))
+      if show_key:
+         gameDisplay.blit(key, (390,350))
+      if show_bear:
+         gameDisplay.blit(bear, (358,353))
+
+
+
       gameDisplay.blit(fountain,(327,490))
 
       gameDisplay.blit(morgan.get_image(), morgan.get_location())
@@ -283,7 +321,7 @@ def intro():
          phase = 7
 
       if phase == 7:
-         dialogue(martin,'BUT FIRST!')
+         dialogue(martin,'But first...')
          phase = 8
 
       if phase == 8:
@@ -334,7 +372,7 @@ def intro():
             phase = 18
 
       if phase == 18:
-         dialogue(geoff,'** Minecraft ** Mario ** Beano **')
+         dialogue(geoff,'Want to see my new Beano?')
          phase = 19
 
       if phase == 19:
@@ -358,7 +396,7 @@ def intro():
             phase = 23
 
       if phase == 23:
-         dialogue(ace,'I HAVE ARRIVED!')
+         dialogue(ace,'HERE!')
          phase = 24
 
       if phase == 24:
@@ -371,6 +409,104 @@ def intro():
          if ace.move_down(215):
             phase = 26
 
+      if phase == 26:
+         dialogue(martin,'Now that everybody is here, we just want to say..')
+         phase = 27
+
+      if phase == 27:
+         cake = pygame.image.load('tiles/cake.png')
+         cake = pygame.transform.scale(cake, (scalesize*2,scalesize*2))
+         dialogue_all('everybody', cake,'HAPPY BIRTHDAY GRANDPA!')
+         phase = 28
+
+      if phase == 28:
+         dialogue(morgan,'We hope you have an amazing day!')
+         phase = 29
+
+      if phase == 29:
+         frame_counter = frame_counter + 1
+         if frame_counter > 100:
+            frame_counter = 0
+            phase = 30
+
+      if phase == 30:
+         dialogue(zander,'Mom, what\'s in the chest?')
+         phase = 31
+
+      if phase == 31:
+         dialogue(ace,'Yeh, I was in the middle of a game!')
+         phase = 32
+
+      if phase == 32:
+         dialogue(morgan,'Well let\'s open it and find out!')
+         show_key = True
+         phase = 33
+
+      if phase == 33:
+         frame_counter = frame_counter + 1
+         if frame_counter > 100:
+            frame_counter = 0
+            phase = 34
+
+      if phase == 34:
+         show_key = False
+         chest = 'open'
+         frame_counter = frame_counter + 1
+         if frame_counter > 100:
+            frame_counter = 0
+            phase = 35
+
+      if phase == 35:
+         chest = 'hidden'
+         show_bear = True
+         frame_counter = frame_counter + 1
+         if frame_counter > 100:
+            frame_counter = 0
+            phase = 36
+
+      if phase == 36:
+         dialogue(martin,'That\'s interesting...')
+         phase = 37
+
+      if phase == 37:
+         dialogue(morgan,'That means...')
+         phase = 38
+
+      if phase == 38:
+         dialogue(geoff,'What does it mean?')
+         phase = 39
+
+      if phase == 39:
+         dialogue(zander,'Oh no...')
+         phase = 40
+
+      if phase == 40:
+         dialogue(ace,'Not again...')
+         phase = 41
+
+      if phase == 41:
+         dialogue(morgan,'Yes, again.')
+         phase = 42
+
+      if phase == 42:
+         dialogue(morgan,'Arriving May 2020')
+         phase = 43
+
+      if phase == 43:
+         dialogue(geoff,'I\'m not sharing my Lego.')
+         phase = 44
+
+      if phase == 44:
+         dialogue(morgan,'Hush all of you!')
+         phase = 45
+
+      if phase == 45:
+         dialogue(morgan,'Thank you for listening to our news!')
+         phase = 46
+
+      if phase == 46:
+         dialogue(martin,'I hope you are excited as we are!')
+         phase = 47
 
       #cat1 = Character('cat1', -100, 20)
       #cat2 = Character('cat2', 900, 40)
