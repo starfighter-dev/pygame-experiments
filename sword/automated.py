@@ -92,6 +92,7 @@ def intro():
    cake_y = 5
 
    pop_sound = pygame.mixer.Sound("sound/pop.wav")
+   open_sound = pygame.mixer.Sound("sound/unlock.wav")
    pygame.mixer.init()
    pygame.mixer.music.load('sound/lullaby.wav')
 
@@ -440,7 +441,7 @@ def intro():
       if phase == 27:
          show_cake = True
          frame_counter = frame_counter + 1
-         if frame_counter > 100:
+         if frame_counter > 50:
             frame_counter = 0
             cake = pygame.image.load('tiles/cake.png')
             cake.set_colorkey(cake.get_at((0,0)), pygame.RLEACCEL)
@@ -474,6 +475,8 @@ def intro():
 
       if phase == 33:
          frame_counter = frame_counter + 1
+         if frame_counter == 90:
+            pygame.mixer.Sound.play(open_sound)
          if frame_counter > 100:
             frame_counter = 0
             phase = 34
