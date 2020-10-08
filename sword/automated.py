@@ -59,7 +59,7 @@ def dialogue_all(name,image,text):
     blackBarRectPos = (128,display_height-128)
     blackBarRectSize = (display_width-128,128)
     pygame.draw.rect(gameDisplay,(0,0,0),pygame.Rect(blackBarRectPos,blackBarRectSize))
-    pygame.draw.rect(gameDisplay,(0,0,0),pygame.Rect((0,display_height-128),(128,128)))
+    pygame.draw.rect(gameDisplay,(255,0,0),pygame.Rect((0,display_height-128),(128,128)))
     gameDisplay.blit(icon,(0,display_height-128))
     char_pos = 0
     text2 = text[0:char_pos]
@@ -87,6 +87,9 @@ def intro():
    chest = 'closed'
    show_key = False
    show_bear = False
+   show_cake = False
+   cake_x = 290
+   cake_y = 5
 
    pop_sound = pygame.mixer.Sound("sound/pop.wav")
    pygame.mixer.init()
@@ -114,6 +117,10 @@ def intro():
    key     = spritesheet.image_at( (ts*7,ts*131,ts,ts),-1 )
    bear    = spritesheet.image_at( (ts*3,ts*128,ts,ts),-1 )
    heart   = pygame.image.load('tiles/heart.png')
+
+   cake_hover = pygame.image.load('tiles/cake.png')
+   cake_hover.set_colorkey(cake_hover.get_at((0,0)), pygame.RLEACCEL)
+   cake_hover = pygame.transform.scale(cake_hover, (scalesize*4,scalesize*4))
 
    cat1 = Character('cat2', -100, 20)
    cat2 = Character('cat2', 900, 40)
@@ -272,6 +279,8 @@ def intro():
          gameDisplay.blit(key, (390,350))
       if show_bear:
          gameDisplay.blit(bear, (358,353))
+      if show_cake:
+         gameDisplay.blit(cake_hover, (cake_x,cake_y))
 
 
 
@@ -429,10 +438,15 @@ def intro():
          phase = 27
 
       if phase == 27:
-         cake = pygame.image.load('tiles/cake.png')
-         cake = pygame.transform.scale(cake, (scalesize*2,scalesize*2))
-         dialogue_all('everybody', cake,'HAPPY BIRTHDAY GRANDPA!')
-         phase = 28
+         show_cake = True
+         frame_counter = frame_counter + 1
+         if frame_counter > 100:
+            frame_counter = 0
+            cake = pygame.image.load('tiles/cake.png')
+            cake.set_colorkey(cake.get_at((0,0)), pygame.RLEACCEL)
+            cake = pygame.transform.scale(cake, (scalesize*2,scalesize*2))
+            dialogue_all('everybody', cake,'HAPPY BIRTHDAY GRANDPA!')
+            phase = 28
 
       if phase == 28:
          dialogue(morgan,'We hope you have an amazing day!')
@@ -445,6 +459,7 @@ def intro():
             phase = 30
 
       if phase == 30:
+         show_cake = False
          dialogue(zander,'Mom, what\'s in the chest?')
          phase = 31
 
