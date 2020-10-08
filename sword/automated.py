@@ -307,6 +307,10 @@ def intro():
          t1 = cat1.move_right(900)
          t2 = cat2.move_left(-100)
          t3 = cat3.move_right(900)
+         font = 'EightBitDragon-anqx.ttf'
+         font = pygame.font.Font(font,20)
+         gameDisplay.blit(font.render('England',1,(255,255,255)),(370,140))
+         gameDisplay.blit(font.render('2020',1,(255,255,255)),(390,170))
          if t1 and t2 and t3:
             print('done cats')
             phase = 1 
