@@ -88,14 +88,19 @@ def intro():
    show_key = False
    show_bear = False
    show_cake = False
+   done_hoot = False
+   did_fade = False
    cake_x = 290
    cake_y = 5
 
+   hoot_sound = pygame.mixer.Sound("sound/hoot.wav")
+   ufo_sound = pygame.mixer.Sound("sound/ufo.wav")
    pop_sound = pygame.mixer.Sound("sound/pop.wav")
    open_sound = pygame.mixer.Sound("sound/unlock.wav")
    pygame.mixer.init()
    pygame.mixer.music.load('sound/lullaby.wav')
 
+   scan = pygame.image.load('pictures/scan.jpg')
    spritesheet = SpriteSheet('tiles/sheet.png')
    pumpkin = spritesheet.image_at( (ts*6,ts*20,ts,ts), -1 )
    seedling = spritesheet.image_at( (ts*7,ts*19,ts,ts), -1 )
@@ -129,7 +134,7 @@ def intro():
    morgan = Character('morgan', -64, 50)
    zander = Character('zander', -64, 70)
    ghost  = Character('ghost', -120, 70)
-   ace   = Character('ace', 575, 188)
+   ace   = Character('alex', 575, 188)
    geoff = Character('geoff', 450, -80)
    martin = Character('martin', 800+64+20, 50)
 
@@ -201,74 +206,78 @@ def intro():
 
       loc_x = 0;
       loc_y = 0;
-      for map_y in background:
-         for map_x in map_y:
-            if map_x == 'S1':
-               gameDisplay.blit(stone1,(loc_x,loc_y))
-            if map_x == 'S2':
-               gameDisplay.blit(stone2,(loc_x,loc_y))
-            if map_x == 'S3':
-               gameDisplay.blit(stone3,(loc_x,loc_y))
-            if map_x == 'G1':
-               gameDisplay.blit(ground1,(loc_x,loc_y))
-            if map_x == 'G2':
-               gameDisplay.blit(ground2,(loc_x,loc_y))
-            if map_x == 'G3':
-               gameDisplay.blit(ground3,(loc_x,loc_y))
-            if map_x == 'P1':
-               gameDisplay.blit(path1,(loc_x,loc_y))
-            loc_x = loc_x + scalesize
-         loc_y = loc_y + scalesize
-         loc_x = 0;
+      if did_fade == False:
+         for map_y in background:
+            for map_x in map_y:
+               if map_x == 'S1':
+                  gameDisplay.blit(stone1,(loc_x,loc_y))
+               if map_x == 'S2':
+                  gameDisplay.blit(stone2,(loc_x,loc_y))
+               if map_x == 'S3':
+                  gameDisplay.blit(stone3,(loc_x,loc_y))
+               if map_x == 'G1':
+                  gameDisplay.blit(ground1,(loc_x,loc_y))
+               if map_x == 'G2':
+                  gameDisplay.blit(ground2,(loc_x,loc_y))
+               if map_x == 'G3':
+                  gameDisplay.blit(ground3,(loc_x,loc_y))
+               if map_x == 'P1':
+                  gameDisplay.blit(path1,(loc_x,loc_y))
+               loc_x = loc_x + scalesize
+            loc_y = loc_y + scalesize
+            loc_x = 0;
 
       loc_x = 0;
       loc_y = 0;
-      for map_y in foreground:
-         for map_x in map_y:
-            if map_x == 'GR':
-               gameDisplay.blit(grave,(loc_x,loc_y))
-            if map_x == 'SK':
-               gameDisplay.blit(skull,(loc_x,loc_y))
-            if map_x == 'PD':
-               gameDisplay.blit(seedling,(loc_x,loc_y))
-            if map_x == 'PU':
-               gameDisplay.blit(pumpkin,(loc_x,loc_y))
-            if map_x == 'T2':
-               gameDisplay.blit(tree2,(loc_x,loc_y))
-            if map_x == 'F1':
-               gameDisplay.blit(fence,(loc_x,loc_y))
-            if map_x == 'L1':
-               gameDisplay.blit(log,(loc_x,loc_y))
-            if map_x == 'A2':
-               gameDisplay.blit(statue2,(loc_x,loc_y))
-            if map_x == 'A3':
-               gameDisplay.blit(statue3,(loc_x,loc_y))
-            if map_x == 'A1':
-               if not summoned:
-                  statue_x = loc_x
-                  statue_y = loc_y
-                  if summoning > 0:
-                     summoning = summoning + 1
-                     statue_x = statue_x + random.randint(-5,5)
-                     statue_y = statue_y + random.randint(-5,5)
-                     if summoning > 80:
-                        # ugh python - ??
-                        dim = statue.get_size()
-                        lst = list(dim)
-                        lst[0] = lst[0] + 100;
-                        lst[1] = lst[1] + 100;
-                        dim = tuple(lst)
-                        statue_x = statue_x - 50 * (summoning-80)
-                        statue_y = statue_y - 50 * (summoning-80)
-                        statue  = pygame.transform.scale(statue, dim)
-                        if summoning == 97:
-                           pygame.mixer.Sound.play(pop_sound)
-                     if summoning > 100:
-                        summoned = True
-                  gameDisplay.blit(statue,(statue_x,statue_y))
-            loc_x = loc_x + scalesize
-         loc_y = loc_y + scalesize
-         loc_x = 0;
+      if did_fade == False:
+         for map_y in foreground:
+            for map_x in map_y:
+               if map_x == 'GR':
+                  gameDisplay.blit(grave,(loc_x,loc_y))
+               if map_x == 'SK':
+                  gameDisplay.blit(skull,(loc_x,loc_y))
+               if map_x == 'PD':
+                  gameDisplay.blit(seedling,(loc_x,loc_y))
+               if map_x == 'PU':
+                  gameDisplay.blit(pumpkin,(loc_x,loc_y))
+               if map_x == 'T2':
+                  gameDisplay.blit(tree2,(loc_x,loc_y))
+               if map_x == 'F1':
+                  gameDisplay.blit(fence,(loc_x,loc_y))
+               if map_x == 'L1':
+                  gameDisplay.blit(log,(loc_x,loc_y))
+               if map_x == 'A2':
+                  gameDisplay.blit(statue2,(loc_x,loc_y))
+               if map_x == 'A3':
+                  gameDisplay.blit(statue3,(loc_x,loc_y))
+               if map_x == 'A1':
+                  if not summoned:
+                     statue_x = loc_x
+                     statue_y = loc_y
+                     if summoning > 0:
+                        if summoning == 1:
+                           pygame.mixer.Sound.play(ufo_sound)
+                        summoning = summoning + 1
+                        statue_x = statue_x + random.randint(-5,5)
+                        statue_y = statue_y + random.randint(-5,5)
+                        if summoning > 80:
+                           # ugh python - ??
+                           dim = statue.get_size()
+                           lst = list(dim)
+                           lst[0] = lst[0] + 100;
+                           lst[1] = lst[1] + 100;
+                           dim = tuple(lst)
+                           statue_x = statue_x - 50 * (summoning-80)
+                           statue_y = statue_y - 50 * (summoning-80)
+                           statue  = pygame.transform.scale(statue, dim)
+                           if summoning == 117:
+                              pygame.mixer.Sound.play(pop_sound)
+                        if summoning > 120:
+                           summoned = True
+                     gameDisplay.blit(statue,(statue_x,statue_y))
+               loc_x = loc_x + scalesize
+            loc_y = loc_y + scalesize
+            loc_x = 0;
 
       # Foreground tiles that don't fit into my tile engine
       if chest != 'hidden':
@@ -284,8 +293,8 @@ def intro():
          gameDisplay.blit(cake_hover, (cake_x,cake_y))
 
 
-
-      gameDisplay.blit(fountain,(327,490))
+      if did_fade != True:
+         gameDisplay.blit(fountain,(327,490))
 
       gameDisplay.blit(morgan.get_image(), morgan.get_location())
       gameDisplay.blit(martin.get_image(), martin.get_location())
@@ -304,16 +313,21 @@ def intro():
 
       # Morgan walks in to the right
       if phase == 0:
+         if done_hoot != True:
+            pygame.mixer.Sound.play(hoot_sound)
+            done_hoot = True
          t1 = cat1.move_right(900)
          t2 = cat2.move_left(-100)
          t3 = cat3.move_right(900)
          font = 'EightBitDragon-anqx.ttf'
-         font = pygame.font.Font(font,20)
-         gameDisplay.blit(font.render('England',1,(255,255,255)),(370,140))
-         gameDisplay.blit(font.render('2020',1,(255,255,255)),(390,170))
+         font = pygame.font.Font(font,30)
+         gameDisplay.blit(font.render('England',1,(255,255,255)),(350,140))
+         gameDisplay.blit(font.render('2020',1,(255,255,255)),(378,185))
          if t1 and t2 and t3:
-            print('done cats')
-            phase = 1 
+            frame_counter = frame_counter + 1
+            if frame_counter > 50:
+               frame_counter = 0
+               phase = 1
 
       if phase == 1:
          if morgan.move_right(360):
@@ -465,7 +479,7 @@ def intro():
 
       if phase == 30:
          show_cake = False
-         dialogue(zander,'Mom, what\'s in the chest?')
+         dialogue(zander,'Wait, what\'s in the chest?')
          phase = 31
 
       if phase == 31:
@@ -528,7 +542,7 @@ def intro():
          phase = 42
 
       if phase == 42:
-         dialogue(morgan,'Arriving May 2020')
+         dialogue(morgan,'Arriving April 2021')
          phase = 43
 
       if phase == 43:
@@ -544,12 +558,35 @@ def intro():
          phase = 46
 
       if phase == 46:
-         dialogue(martin,'I hope you are excited as we are!')
+         dialogue(martin,'We hope you are excited as we are!')
          phase = 47
 
       if phase == 47:
+         frame_counter = frame_counter + 1
+         if frame_counter > 100:
+            frame_counter = 0
+            phase = 48
+
+      if phase == 48:
+         did_fade = True
          fadeout()
-         phase = 48
+         phase = 49
+
+      if phase == 49:
+         pygame.draw.rect(gameDisplay,(0,0,0),(30,30,740,540))
+         font_heading = 'EightBitDragon-anqx.ttf'
+         font_heading = pygame.font.Font(font_heading,20)
+         font_body = 'EightBitDragon-anqx.ttf'
+         font_body = pygame.font.Font(font_body,15)
+         gameDisplay.blit(font_heading.render('Sound Credits',1,(255,255,255)),(320,60))
+         gameDisplay.blit(font_body.render('https://freesound.org/people/BeezleFM (unlock)',1,(193,193,193)),(140,100))
+         gameDisplay.blit(font_body.render('https://freesound.org/people/erkanozan/ (ufo)',1,(193,193,193)),(140,120))
+         gameDisplay.blit(font_body.render('https://freesound.org/people/Breviceps/ (owl)',1,(193,193,193)),(140,140))
+         gameDisplay.blit(font_heading.render('Lullaby Music',1,(255,255,255)),(330,180))
+         gameDisplay.blit(font_body.render('David Vitas @davidvitas',1,(193,193,193)),(290,220))
+         gameDisplay.blit(scan, (150,280))
+
+
 
       #cat1 = Character('cat1', -100, 20)
       #cat2 = Character('cat2', 900, 40)
