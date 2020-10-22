@@ -1,3 +1,7 @@
+# An animation. I'm not really sure the best way to do simple animations in
+# pygame, so this is my first attempt. I also haven't touched Python in quite
+# some time, so please exuse some of the code that follows.
+#
 import pygame, time, random
 from spritesheet import SpriteSheet
 from characters import Character 
@@ -585,7 +589,24 @@ def intro():
          gameDisplay.blit(font_heading.render('Lullaby Music',1,(255,255,255)),(330,180))
          gameDisplay.blit(font_body.render('David Vitas @davidvitas',1,(193,193,193)),(290,220))
          gameDisplay.blit(scan, (150,280))
+         frame_counter = frame_counter + 1
+         if frame_counter > 300:
+            frame_counter = 0
+            fadeout()
+            phase = 50
 
+      if phase == 50:
+         pygame.draw.rect(gameDisplay,(0,0,0),(30,30,740,540))
+         font_heading = 'EightBitDragon-anqx.ttf'
+         font_heading = pygame.font.Font(font_heading,20)
+         font_body = 'EightBitDragon-anqx.ttf'
+         font_body = pygame.font.Font(font_body,15)
+         gameDisplay.blit(font_heading.render('Graphics',1,(255,255,255)),(355,60))
+         gameDisplay.blit(font_body.render('https://pipoya.itch.io/pipoya-rpg-tileset-32x32 (tiles)',1,(193,193,193)),(140,100))
+         gameDisplay.blit(font_body.render('Character sprites from ???',1,(193,193,193)),(140,120))
+         gameDisplay.blit(font_heading.render('Thanks for watching :-)',1,(255,255,255)),(270,170))
+         gameDisplay.blit(font_body.render('www.starfighter.dev',1,(193,193,193)),(310,230))
+         gameDisplay.blit(scan, (150,280))
 
 
       #cat1 = Character('cat1', -100, 20)
