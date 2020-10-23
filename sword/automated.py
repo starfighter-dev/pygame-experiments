@@ -96,13 +96,15 @@ def intro():
    did_fade = False
    cake_x = 290
    cake_y = 5
+   key_pressed = False
 
    hoot_sound = pygame.mixer.Sound("sound/hoot.wav")
    ufo_sound = pygame.mixer.Sound("sound/ufo.wav")
    pop_sound = pygame.mixer.Sound("sound/pop.wav")
    open_sound = pygame.mixer.Sound("sound/unlock.wav")
    pygame.mixer.init()
-   pygame.mixer.music.load('sound/lullaby.wav')
+   pygame.mixer.music.load('sound/music.wav')
+   pygame.mixer.music.set_volume(0.1)
 
    scan = pygame.image.load('pictures/scan.jpg')
    spritesheet = SpriteSheet('tiles/sheet.png')
@@ -204,6 +206,15 @@ def intro():
          if event.type == pygame.QUIT:
             pygame.quit()
             quit()
+
+      # For the sake of video capture, this will require
+      # a hit of the space bar to start the whole thing..
+      key_input = pygame.key.get_pressed()
+      if key_pressed != True:
+         if key_input[pygame.K_SPACE]:
+            key_pressed = True
+         continue
+
 
          #debug
          #print(event)
@@ -332,6 +343,7 @@ def intro():
             if frame_counter > 50:
                frame_counter = 0
                phase = 1
+               pygame.mixer.music.play(1)
 
       if phase == 1:
          if morgan.move_right(360):
@@ -510,6 +522,10 @@ def intro():
          if frame_counter > 100:
             frame_counter = 0
             phase = 35
+            pygame.mixer.init()
+            pygame.mixer.music.load('sound/lullaby.wav')
+            pygame.mixer.music.set_volume(1)
+            pygame.mixer.music.play(1)
 
       if phase == 35:
          chest = 'hidden'
@@ -586,8 +602,9 @@ def intro():
          gameDisplay.blit(font_body.render('https://freesound.org/people/BeezleFM (unlock)',1,(193,193,193)),(140,100))
          gameDisplay.blit(font_body.render('https://freesound.org/people/erkanozan/ (ufo)',1,(193,193,193)),(140,120))
          gameDisplay.blit(font_body.render('https://freesound.org/people/Breviceps/ (owl)',1,(193,193,193)),(140,140))
-         gameDisplay.blit(font_heading.render('Lullaby Music',1,(255,255,255)),(330,180))
-         gameDisplay.blit(font_body.render('David Vitas @davidvitas',1,(193,193,193)),(290,220))
+         gameDisplay.blit(font_heading.render('Music',1,(255,255,255)),(370,180))
+         gameDisplay.blit(font_body.render('David Vitas @davidvitas (Lullaby Music)',1,(193,193,193)),(230,240))
+         gameDisplay.blit(font_body.render('sawsquarenoise (Towel Defence Ending)',1,(193,193,193)),(230,220))
          gameDisplay.blit(scan, (150,280))
          frame_counter = frame_counter + 1
          if frame_counter > 300:
