@@ -102,9 +102,10 @@ def intro():
    ufo_sound = pygame.mixer.Sound("sound/ufo.wav")
    pop_sound = pygame.mixer.Sound("sound/pop.wav")
    open_sound = pygame.mixer.Sound("sound/unlock.wav")
+   happy_birthday = pygame.mixer.Sound("sound/happybirthday.wav")
    pygame.mixer.init()
    pygame.mixer.music.load('sound/music.wav')
-   pygame.mixer.music.set_volume(0.1)
+   pygame.mixer.music.set_volume(0.3)
 
    scan = pygame.image.load('pictures/scan.jpg')
    spritesheet = SpriteSheet('tiles/sheet.png')
@@ -213,6 +214,10 @@ def intro():
       if key_pressed != True:
          if key_input[pygame.K_SPACE]:
             key_pressed = True
+         font_heading = 'EightBitDragon-anqx.ttf'
+         font_heading = pygame.font.Font(font_heading,30)
+         gameDisplay.blit(font_heading.render('INSERT COIN',1,(255,255,255)),(325,280))
+         pygame.display.update()
          continue
 
 
@@ -476,6 +481,7 @@ def intro():
          show_cake = True
          frame_counter = frame_counter + 1
          if frame_counter > 50:
+            pygame.mixer.Sound.play(happy_birthday)
             frame_counter = 0
             cake = pygame.image.load('tiles/cake.png')
             cake.set_colorkey(cake.get_at((0,0)), pygame.RLEACCEL)
