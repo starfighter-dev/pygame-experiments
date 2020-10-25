@@ -620,10 +620,21 @@ def intro():
          font_body = pygame.font.Font(font_body,15)
          gameDisplay.blit(font_heading.render('Graphics',1,(255,255,255)),(355,60))
          gameDisplay.blit(font_body.render('https://pipoya.itch.io/pipoya-rpg-tileset-32x32 (tiles)',1,(193,193,193)),(140,100))
-         gameDisplay.blit(font_body.render('Character sprites from ???',1,(193,193,193)),(140,120))
-         gameDisplay.blit(font_heading.render('Thanks for watching :-)',1,(255,255,255)),(270,170))
-         gameDisplay.blit(font_body.render('www.starfighter.dev',1,(193,193,193)),(310,230))
+         gameDisplay.blit(font_body.render('https://pipoya.itch.io/pipoya-free-rpg-character-sprites-32x32',1,(193,193,193)),(90,120))
+         gameDisplay.blit(font_body.render('(character sprites)',1,(193,193,193)),(320,140))
+         gameDisplay.blit(font_heading.render('Thanks to all content creators!',1,(255,255,255)),(220,180))
+         gameDisplay.blit(font_body.render('starfighter.dev',1,(193,193,193)),(330,250))
          gameDisplay.blit(scan, (150,280))
+
+         frame_counter = frame_counter + 1
+         if frame_counter > 300:
+            fadeout()
+            frame_counter = 0
+            phase = 51
+
+      if phase == 51:
+         pygame.draw.rect(gameDisplay,(0,0,0),(30,30,740,540))
+         pygame.mixer.music.fadeout(5000)
 
 
       #cat1 = Character('cat1', -100, 20)

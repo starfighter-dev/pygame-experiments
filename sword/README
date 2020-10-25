@@ -1,0 +1,36 @@
+This is an experiment with making some sort of RPG type thing. The main goal of this was to create an animation to wish Happy Birthday to Moog's dad, but also to announce our new arrival. There's a youtube video of the final results, you can find it here: XXX
+
+automation.pl - This is the animation. Don't judge. I've never written anything in Pygame before and I wasn't sure of the best way of doing things, so I've done things in a way that .. works. But it may not be pretty.
+
+controllable_skull.py - Move a skull around.
+
+controllable_character.py - Move a character around, with appropriate animations.
+
+bouncing_skull.py - Typical bouncing ball animation, but with a skull.
+
+This uses a spritesheet class that I found on the internet.
+
+The animation uses the following assets, created by people far more talented than I, and I'm grateful for their content!
+
+
+Character sprites by pipoya:
+https://pipoya.itch.io/pipoya-free-rpg-character-sprites-32x32
+
+Background tiles by pipoya:
+https://pipoya.itch.io/pipoya-rpg-tileset-32x32
+
+Lullaby Music by David Vitas (@davidvitas)
+https://davidvitasmusic.bandcamp.com/album/rpg-music-pack
+
+Towel Defence Ending Music by sawsquarenoise
+https://freemusicarchive.org/music/sawsquarenoise
+
+Sounds
+https://freesound.org/people/BeezleFM (unlock sound)
+https://freesound.org/people/erkanozan (ufo sound)
+https://freesound.org/people/Breviceps (hooting owl)
+'pop' sound by unknown, sorry.
+
+Python and Pygame experimentation by moi:
+https://github.com/starfighter-dev/pygame-experiments/tree/master/sword
+
