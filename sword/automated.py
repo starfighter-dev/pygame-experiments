@@ -568,7 +568,7 @@ def intro():
          phase = 42
 
       if phase == 42:
-         dialogue(morgan,'Arriving April 2021')
+         dialogue(morgan,'Arriving April 2021! A new player!')
          phase = 43
 
       if phase == 43:

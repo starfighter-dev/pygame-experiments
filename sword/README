@@ -1,4 +1,4 @@
-This is an experiment with making some sort of RPG type thing. The main goal of this was to create an animation to wish Happy Birthday to Moog's dad, but also to announce our new arrival. There's a youtube video of the final results, you can find it here: XXX
+This is an experiment with making some sort of RPG type thing. The main goal of this was to create an animation to wish Happy Birthday to Moog's dad, but also to announce our new arrival. There's a youtube video of the final results, you can find it here: https://www.youtube.com/watch?v=fL_arATyylc
 
 automation.pl - This is the animation. Don't judge. I've never written anything in Pygame before and I wasn't sure of the best way of doing things, so I've done things in a way that .. works. But it may not be pretty.
 
