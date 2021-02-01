@@ -1,3 +1,11 @@
 I'm currently playing around with pygame.. here are my things.
 
-The neatest so far is in 'sword' where I'm playing with RPG assets and also trying to create an animation.
+I made a video to announce the arrival of my daughter - it's an RPG engine (sort of) written in Python with Pygame. The actual code for that lives here:
+
+   - sword/automated.py
+
+You view the final video here:
+
+   - https://youtu.be/fL_arATyylc
+
+I'm also playing with the idea of creating an actual game with pygame - it's great.
